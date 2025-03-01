@@ -5,3 +5,4 @@ do_token = "dop_v1_90b25d425f4e1e6059c670bee45e830521e8fc80cfb4f9853685dac013a68
 environment = "production"         # or "staging"
 pvt_key = "~/.ssh/id_rsa"
 ssh_port = 22                      # Default SSH port
+server_id = "digitalocean_droplet.my_droplet.id"
