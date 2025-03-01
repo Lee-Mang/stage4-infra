@@ -1,5 +1,5 @@
 module "compute" {
-  source = "../../../modules/digitalocean/compute"
+  source = "../../../modules/compute"
 
   environment     = var.environment
   do_server_size  = var.do_server_size

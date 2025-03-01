@@ -4,7 +4,7 @@ provider "digitalocean" {
   token = "dop_v1_90b25d425f4e1e6059c670bee45e830521e8fc80cfb4f9853685dac013a68738"
 }
 
-resource "digitalocean_droplet" "example" {
+resource "digitalocean_droplet" "server" {
   image  = "ubuntu-24-10-x64"
   name   = "ubuntu-HNG"
   region = "lon1"  # Use your preferred region
@@ -12,15 +12,19 @@ resource "digitalocean_droplet" "example" {
   ssh_keys = ["HNG"]  # Replace with your SSH key ID
 }
 
+output "server_id" {
+  value = digitalocean_droplet.server.id
+}
+
 output "droplet_ip" {
-  value = digitalocean_droplet.example.ipv4_address
+  value = digitalocean_droplet.server.ipv4_address
 }
 
 resource "digitalocean_firewall" "server-firewall" {
   name        = "${var.environment}-server-firewall"
   tags        = ["environment:${var.environment}"]
   droplet_ids = [var.server_id]
-  
+
   inbound_rule {
     protocol   = "tcp"
     port_range = "22"

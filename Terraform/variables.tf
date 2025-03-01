@@ -1,4 +1,7 @@
-
+variable "server_id" {
+  description = "The ID of the droplet"
+  type        = string
+}
 variable "do_server_size" {
   type        = string
   description = "Size of the server droplet"
