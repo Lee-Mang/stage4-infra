@@ -30,3 +30,7 @@
     state: present
     recreate: auto
 
+- name: 
+    shell: |
+        curl "https://www.duckdns.org/update?domains=yourdomain&token=your_duckdns_token&ip={{ ansible_host }}"
+  become: true
