@@ -1,1 +1,35 @@
+---
+# Infrastructure Automation Playbook
+# Part of Terraform + Ansible Infrastructure Automation
+
+- name: Verify Connectivity
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Ping hosts
+      ansible.builtin.ping:
+    - name: Print host information
+      ansible.builtin.debug:
+        msg: "Connected to {{ inventory_hostname }}"
+
+- name: System Hardening & Base Configuration
+  hosts: server
+  become: true
+  tags: [system, essentials]
+  roles:
+    - essentials
+
+- name: Container Runtime Setup
+  hosts: server
+  become: true
+  tags: [docker, runtime]
+  roles:
+    - docker
+
+- name: Deploy Applications
+  hosts: server
+  become: true
+  tags: [apps, services]
+  roles:
+    - applications
 
