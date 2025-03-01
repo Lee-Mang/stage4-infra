@@ -16,10 +16,11 @@ output "droplet_ip" {
   value = digitalocean_droplet.example.ipv4_address
 }
 
-resource "digitalocean_firewall" "example" {
-  name    = "example-firewall"
-  droplet_ids = [digitalocean_droplet.my_droplet.id]  # This attaches the firewall to your droplet
-
+resource "digitalocean_firewall" "server-firewall" {
+  name        = "${var.environment}-server-firewall"
+  tags        = ["environment:${var.environment}"]
+  droplet_ids = [var.server_id]
+  
   inbound_rule {
     protocol   = "tcp"
     port_range = "22"
