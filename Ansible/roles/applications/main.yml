@@ -1,0 +1,36 @@
+- name: Ensure the apps directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/apps"
+    state: directory
+    owner: "{{ ansible_facts['user_id'] }}"
+    group: "{{ ansible_facts['user_id'] }}"
+    mode: '0755'
+
+- name: Clone/update git repository
+  ansible.builtin.git:
+    repo: "https://github.com/Lee-Mang/DevOps-Stage-4"
+    dest: "{{ ansible_env.HOME }}/apps"
+    version: "main"
+    update: true
+    force: true
+    depth: 1
+    single_branch: true
+    accept_hostkey: true
+  register: git_result
+  ignore_errors: true
+
+- name: Display git clone/update status
+  ansible.builtin.debug:
+    var: git_result
+
+- name: Run docker compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ ansible_env.HOME }}/apps"
+    pull: missing
+    state: present
+    recreate: auto
+
+- name: 
+    shell: |
+        curl "https://www.duckdns.org/update?domains=yourdomain&token=your_duckdns_token&ip={{ ansible_host }}"
+  become: true
